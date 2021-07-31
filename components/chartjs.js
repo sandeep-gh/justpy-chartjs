@@ -10,7 +10,7 @@ Vue.component('chartjs', {
             var id = this.$props.jp_props.id.toString();
             var canvas = document.getElementById(id);
             ctx = canvas.getContext('2d');
-            var c = new Chart(ctx).Line(this.$props.jp_props.def);
+            var c = new Chart(ctx, this.$props.jp_props.def);
             //var c = new Chart(buyers).Line(this.$props.jp_props.def);
             //var btn = document.createElement("BUTTON");
             //btn.innerHTML = JSON.stringify(this.$props.jp_props.def);

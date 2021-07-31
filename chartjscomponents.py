@@ -12,8 +12,8 @@ class ChartJS(JustpyBaseComponent):
         self.options = Dict()
         self.classes = ''
         self.style = ''
-        self.width = 400
-        self.height = 200
+        self.width = "0px"
+        self.height = "0px"
         self.clear = False
         self.show = True
         self.event_propagation = True
@@ -37,6 +37,18 @@ class ChartJS(JustpyBaseComponent):
                 self.__dict__[key] = value
         else:
             self.__dict__[key] = value
+
+    def set_title(self, title_text):
+        print("opt = ", self.options)
+        self.options.options.title.display = True
+        self.options.options.title.text = title_text
+        print("opt = ", self.options)
+        pass
+
+    def add_dataset(self, dataset_plot_cfg):
+        self.options.data.datasets.append(Dict(demjson.decode(
+            dataset_plot_cfg.encode("ascii", "ignore"))))
+        print("post add dataset =", self.options)
 
     async def chart_update(self, update_dict, websocket):
         # https://api.highcharts.com/class-reference/Highcharts.Chart#update
@@ -81,4 +93,6 @@ class ChartJS(JustpyBaseComponent):
         d['clear'] = self.clear
         d['options'] = self.options
 
+        # print("obj-dict id = ", self.id, "  style = ", self.style,
+        #      "width = ", self.width, "height = ", self.height, "classes=", self.classes)
         return d
