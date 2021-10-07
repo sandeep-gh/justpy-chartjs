@@ -1,11 +1,5 @@
-from  jpcjs_tags import *
-from  justpy_chartjs import chartjscomponents as cj
-#import chartjscomponents as cj
 import justpy as jp
-import json
-import display_components as dc
-
-import tailwind_style_tags as ddt
+from  justpy_chartjs import chartjscomponents as cj
 
 my_chart_def = """{
               type: 'bar',

@@ -1,6 +1,6 @@
 from addict import Dict
+from justpy_chartjs.tags import cfg_template as ct
 import jpcjs_tags.cfg_template as ct
-import common.plot_utils as plu
 import json
 import jsbeautifier
 
@@ -15,8 +15,8 @@ datavals = [ [{'x': 1, 'y':3}, {'x':5, 'y':5}],
              [{'x': 1, 'y':2}, {'x':5, 'y':6}],
              [{'x': 1, 'y':9}, {'x':5, 'y':7}],
     ]
-anchors = ['#66FF66', '#660066', '#993333']
-colors = plu.pick_colors_from_anchors(anchors, len(datavals))
+
+
 cfgctx = Dict()
 cfgctx.plttype = ct.PlotType.Line
 cfgctx.xaxis_type = ct.ScaleType.Linear

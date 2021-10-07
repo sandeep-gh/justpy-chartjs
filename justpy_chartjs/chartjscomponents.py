@@ -3,7 +3,7 @@ from addict import Dict
 import justpy as jp
 from justpy import JustpyBaseComponent
 from justpy import WebPage
-from tailwind_style_tags import *
+from tailwind_tags import *
 from dpath.util import get as dget, set as dset
 
 
