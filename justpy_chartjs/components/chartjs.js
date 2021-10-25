@@ -17,6 +17,7 @@ Vue.component('chartjs', {
             //btn.innerHTML = JSON.stringify(this.$props.jp_props.def);
             //document.body.appendChild(btn);
             cached_graph_def['chart'+id] = c;
+            c.update();
         },
         graphjs_destroy() {
             var id = this.$props.jp_props.id.toString();

@@ -88,8 +88,8 @@ class ChartJS(JustpyBaseComponent):
     #     return True
 
     def new_chart(self,  new_options):
-        self.load_json(new_options)
         self.update_create = True
+        self.load_json(new_options)
 
     def add_to_page(self, wp: WebPage):
         wp.add_component(self)
@@ -131,8 +131,9 @@ class ChartJS(JustpyBaseComponent):
         d['clear'] = self.clear
         d['options'] = self.options
         d['update_create'] = self.update_create
-        print("convert called ", self.options)
+
         self.update_create = False
+        print("convert called ", self.update_create)
 
         # print("obj-dict id = ", self.id, "  style = ", self.style,
         #      "width = ", self.width, "height = ", self.height, "classes=", self.classes)
