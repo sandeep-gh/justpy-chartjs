@@ -135,7 +135,7 @@ def build_pltcfg(cfgctx):
     cfg.options.responsive = CfgattrMeta(True, bool, bool, CPT.config)
     cfg.options.maintainAspectRatio = CfgattrMeta(
         False, bool, bool, CPT.advanced)
-    cfg.options.aspectRatio = CfgattrMeta(2, int, [1, 4], CPT.simplemore)
+    cfg.options.aspectRatio = CfgattrMeta(2, int, [1, 4], CPT.advanced)
     cfg.options.resizeDelay = CfgattrMeta(4, int, [0, 10], CPT.advanced)
 
     cfg.options.devicePixelRatio = CfgattrMeta(1, int, [0, 10], CPT.advanced)
@@ -150,40 +150,46 @@ def build_pltcfg(cfgctx):
     cfg.options.interaction.axis = CfgattrMeta(
         'x', str, ['x', 'y', 'xy'], CPT.ninja)
 
-    #TBD events : https://www.chartjs.org/docs/latest/configuration/interactions.html
-    #TBD: https://www.chartjs.org/docs/latest/configuration/interactions.html#converting-events-to-data-values
+    # TBD events : https://www.chartjs.org/docs/latest/configuration/interactions.html
+    # TBD: https://www.chartjs.org/docs/latest/configuration/interactions.html#converting-events-to-data-values
 
-    cfg.options.indexAxis = CfgattrMeta(None, None, None, CPT.TBD) #Axis.x.value
+    cfg.options.indexAxis = CfgattrMeta(
+        None, None, None, CPT.TBD)  # Axis.x.value
     cfg.options.plugins = Dict()
     cfg.options.plugins.legend = Dict()
-    cfg.options.plugins.legend.position = CfgattrMeta(Position.top, Position, Position, CPT.simplemore)
+    cfg.options.plugins.legend.position = CfgattrMeta(
+        Position.top, Position, Position, CPT.simplemore)
 
     cfg.options.plugins.title = Dict()
-    cfg.options.plugins.title.display = CfgattrMeta(True, bool, bool, CPT.simplemore)
-    cfg.options.plugins.title.text = CfgattrMeta(cfgctx["plot_title"], str, str, CPT.simple) 
+    cfg.options.plugins.title.display = CfgattrMeta(
+        True, bool, bool, CPT.simplemore)
+    cfg.options.plugins.title.text = CfgattrMeta(
+        cfgctx["plot_title"], str, str, CPT.simple)
     cfg.options.elements = Dict()
 
-    #configure point ui-elem look-and-feel
+    # configure point ui-elem look-and-feel
     if cfgctx.plttype in [PlotType.Line, PlotType.Bubble]:
         _ = cfg.options.elements.point = Dict()
         _ = cfg.options.elements.point
-        _.radius = CfgattrMeta(3, int, [0,5], CPT.nitpick)
-        _.pointStyle = CfgattrMeta(PointStyle.circle, PointStyle, PointStyle, CPT.nitpick)
-        _.backgroundColor = CfgattrMeta("", Color, BackgroundColor, CPT.simplemore)
-        _.borderWidth = CfgattrMeta(2, int, [0,5], CPT.nitpick)
-        _.borderColor =  CfgattrMeta("", Color, BorderColor, CPT.nitpick)
+        _.radius = CfgattrMeta(3, int, [0, 5], CPT.nitpick)
+        _.pointStyle = CfgattrMeta(
+            PointStyle.circle, PointStyle, PointStyle, CPT.nitpick)
+        _.backgroundColor = CfgattrMeta(
+            "", Color, BackgroundColor, CPT.simplemore)
+        _.borderWidth = CfgattrMeta(2, int, [0, 5], CPT.nitpick)
+        _.borderColor = CfgattrMeta("", Color, BorderColor, CPT.nitpick)
         _.hitRadius = CfgattrMeta(1, int, [0, 3], CPT.TBD)
-        _.hoverRadius = CfgattrMeta(2, int, [0,5], CPT.TBD)
-        _.hoverBorderWidth = CfgattrMeta(1, int, [0,5], CPT.TBD)
+        _.hoverRadius = CfgattrMeta(2, int, [0, 5], CPT.TBD)
+        _.hoverBorderWidth = CfgattrMeta(1, int, [0, 5], CPT.TBD)
 
-    
     if cfgctx.plttype in [PlotType.Line]:
         _ = cfg.options.elements.line = Dict()
-        _.tension = CfgattrMeta(0, float, [0,1], CPT.advanced)
-        _.backgroundColor = CfgattrMeta("", Color, BackgroundColor, CPT.simplemore)
-        _.borderWidth = CfgattrMeta(2, int, [0,5], CPT.nitpick)
-        _.borderColor =  CfgattrMeta("", Color, BorderColor, CPT.simplemore)
-        _.borderCapStyle =  CfgattrMeta("butt", None, None, CPT.TBD)
+        _.tension = CfgattrMeta(0, float, [0, 1], CPT.advanced)
+        _.backgroundColor = CfgattrMeta(
+            "", Color, BackgroundColor, CPT.simplemore)
+        _.borderWidth = CfgattrMeta(2, int, [0, 5], CPT.nitpick)
+        _.borderColor = CfgattrMeta("", Color, BorderColor, CPT.simplemore)
+        _.borderCapStyle = CfgattrMeta("butt", None, None, CPT.TBD)
         _.borderDash = CfgattrMeta([], None, None, CPT.TBD)
         _.borderDashOffset = CfgattrMeta(0.0, None, None, CPT.TBD)
         _.borderJoinStyle = CfgattrMeta("miter", None, None, CPT.TBD)
@@ -195,7 +201,8 @@ def build_pltcfg(cfgctx):
         if cfgctx.xaxis_type in [ScaleType.Linear, ScaleType.Time] and cfgctx.parsing == False:
             _ = cfg.options.plugins.decimation = Dict()
             _.enabled = CfgattrMeta(False, bool, bool, CPT.advanced)
-            _.algorithm = CfgattrMeta('min-max', str, ['min-max', 'lttb'], CPT.advanced)
+            _.algorithm = CfgattrMeta(
+                'min-max', str, ['min-max', 'lttb'], CPT.advanced)
             _.samples = CfgattrMeta(None, int, int, CPT.TBD)
             _.threshold = CfgattrMeta(None, int, int, CPT.TBD)
 
@@ -203,14 +210,15 @@ def build_pltcfg(cfgctx):
         cfg.options.elements.bar = Dict()
         _ = cfg.options.elements.bar
         _.backgroundColor = CfgattrMeta("", Color, BackgroundColor, CPT.simple)
-        _.borderWidth = CfgattrMeta(2, int, [0,5], CPT.nitpick)
+        _.borderWidth = CfgattrMeta(2, int, [0, 5], CPT.nitpick)
         _.borderColor = CfgattrMeta("", Color, BorderColor, CPT.nitpick)
-        _.borderSkipped = CfgattrMeta('start', str, ['bottom', 'left', 'top', 'right', 'false'], CPT.advanced)
-        _.borderRadius =  CfgattrMeta( 2, int, [0,6], CPT.nitpick)
-        _.pointStyle = CfgattrMeta( 'circle', PointStyle, PointStyle, CPT.nitpick)
+        _.borderSkipped = CfgattrMeta(
+            'start', str, ['bottom', 'left', 'top', 'right', 'false'], CPT.advanced)
+        _.borderRadius = CfgattrMeta(2, int, [0, 6], CPT.nitpick)
+        _.pointStyle = CfgattrMeta(
+            'circle', PointStyle, PointStyle, CPT.nitpick)
 
-        
-    #configure scales     
+    # configure scales
     if cfgctx.plttype in [PlotType.Bar, PlotType.Line]:
         cfg.options.scales = Dict()
         _ = cfg.options.scales.xAxis = Dict()
@@ -221,61 +229,70 @@ def build_pltcfg(cfgctx):
         _.min = CfgattrMeta(None, int, int, CPT.config)
         _.max = CfgattrMeta(None, int, int, CPT.config)
         _.reversed = CfgattrMeta(False, bool, bool, CPT.TBD)
-        _.stacked = CfgattrMeta(False, bool, bool, CPT.config) # should the data be scaled
+        # should the data be scaled
+        _.stacked = CfgattrMeta(False, bool, bool, CPT.config)
         _.suggestedMax = CfgattrMeta(None, int, int, CPT.TBD)
         _.suggestedMin = CfgattrMeta(None, int, int, CPT.TBD)
-        _.weight = CfgattrMeta(0, int, int, CPT.TBD) #move away from chart area
-        _.ticks = Dict() #TBD
-        _.ticks.backdropColor = CfgattrMeta("", Color, Color, CPT.nitpick) #background color for label
-        _.ticks.backdropPadding = CfgattrMeta(2, int, [0,5], CPT.advanced) #padding for label backdrop
+        # move away from chart area
+        _.weight = CfgattrMeta(0, int, int, CPT.TBD)
+        _.ticks = Dict()  # TBD
+        _.ticks.backdropColor = CfgattrMeta(
+            "", Color, Color, CPT.nitpick)  # background color for label
+        _.ticks.backdropPadding = CfgattrMeta(
+            2, int, [0, 5], CPT.advanced)  # padding for label backdrop
         _.ticks.callback = CfgattrMeta(None, None, None, CPT.TBD)
         _.ticks.display = CfgattrMeta(True, bool, bool, CPT.simple)
-        _.ticks.color = CfgattrMeta("", Color, Color, CPT.nitpick) #TBD
+        _.ticks.color = CfgattrMeta("", Color, Color, CPT.nitpick)  # TBD
         _.ticks.font = CfgattrMeta(None, None, None, CPT.TBD)
-        #_.ticks.major = Dict() #TBD: major tick formatting
+        # _.ticks.major = Dict() #TBD: major tick formatting
         _.ticks.padding = CfgattrMeta(2, int, int, CPT.nitpick)
         _.ticks.showLabelBackdrop = CfgattrMeta(False, bool, bool, CPT.nitpick)
         _.ticks.textStrokeColor = CfgattrMeta("", Color, Color, CPT.TBD)
         _.ticks.textStrokeWidth = CfgattrMeta(0, int, int, CPT.TBD)
 
         _.ticks.z = CfgattrMeta(0, int, int, CPT.advanced)
-        _.ticks.align = CfgattrMeta('center', ['start', 'center', 'end'], ['start', 'center', 'end'], CPT.ocd)
-        _.ticks.crossAlign = CfgattrMeta("near", ["near", "center", "far"], ["near", "center", "far"], CPT.ocd)
+        _.ticks.align = CfgattrMeta('center', ['start', 'center', 'end'], [
+                                    'start', 'center', 'end'], CPT.ocd)
+        _.ticks.crossAlign = CfgattrMeta("near", ["near", "center", "far"], [
+                                         "near", "center", "far"], CPT.ocd)
         _.ticks.sampleSize = CfgattrMeta(None, None, None, CPT.TBD)
         _.ticks.autoSkip = CfgattrMeta(True, bool, bool, CPT.advanced)
         _.ticks.autoSkipPadding = CfgattrMeta(3, int, int, CPT.advanced)
         _.ticks.includeBounds = CfgattrMeta(None, None, None, CPT.TBD)
-        _.ticks.labelOffset = CfgattrMeta(0, int, [0,5], CPT.nitpick)
+        _.ticks.labelOffset = CfgattrMeta(0, int, [0, 5], CPT.nitpick)
         _.ticks.maxRotation = CfgattrMeta(50, int, [0, 100], CPT.advanced)
-        _.ticks.minRotation = CfgattrMeta(0, int, [0,100], CPT.advanced)
+        _.ticks.minRotation = CfgattrMeta(0, int, [0, 100], CPT.advanced)
         _.ticks.mirror = CfgattrMeta(False, bool, bool, CPT.advanced)
 
-        _.grid = Dict() #TBD
+        _.grid = Dict()  # TBD
         _.grid.display = CfgattrMeta(False, bool, bool, CPT.simplemore)
         _.grid.color = CfgattrMeta("", Color, Color, CPT.simple)
         _.grid.borderColor = CfgattrMeta("", Color, Color, CPT.nitpick)
         _.grid.tickColor = CfgattrMeta("", Color, Color, CPT.nitpick)
-        _.grid.circular = CfgattrMeta(None, None, None, CPT.TBD) #from for radar chart
-        
-        #TBD: other grid parameters
-        #https://www.chartjs.org/docs/2.9.4/axes/styling.html?h=grid
-        
+        _.grid.circular = CfgattrMeta(
+            None, None, None, CPT.TBD)  # from for radar chart
+
+        # TBD: other grid parameters
+        # https://www.chartjs.org/docs/2.9.4/axes/styling.html?h=grid
+
         _.title = Dict()
         _.title.color = CfgattrMeta("", Color, TextColor, CPT.nitpick)
         _.title.display = CfgattrMeta(True, bool, bool, CPT.simplemore)
-        _.title.text = CfgattrMeta(cfgctx["xaxis_title"], str, str, CPT.simple)    
+        _.title.text = CfgattrMeta(cfgctx["xaxis_title"], str, str, CPT.simple)
 
-        #The yAxis
+        # The yAxis
         cfg.options.scales.yAxis = Dict()
         _ = cfg.options.scales.yAxis
-        _.type = CfgattrMeta('linear', ScaleType, ScaleType, CPT.advanced) #TBD this doesn't need to be linear
+        # TBD this doesn't need to be linear
+        _.type = CfgattrMeta('linear', ScaleType, ScaleType, CPT.advanced)
         _.alignToPixels = CfgattrMeta(False, bool, bool, CPT.TBD)
         _.backgroundColor = CfgattrMeta("", Color, BackgroundColor, CPT.simple)
 
         _.min = CfgattrMeta(None, int, int, CPT.config)
         _.max = CfgattrMeta(None, int, int, CPT.config)
         _.reversed = CfgattrMeta(False, bool, bool, CPT.TBD)
-        _.stacked = CfgattrMeta(False, bool, bool, CPT.config) # should the data be scaled
+        # should the data be scaled
+        _.stacked = CfgattrMeta(False, bool, bool, CPT.config)
         _.suggestedMax = CfgattrMeta(None, int, int, CPT.TBD)
         _.suggestedMin = CfgattrMeta(None, int, int, CPT.TBD)
         _.weight = CfgattrMeta(0, int, int, CPT.TBD) #move away from chart area
