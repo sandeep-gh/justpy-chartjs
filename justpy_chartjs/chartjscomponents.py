@@ -11,20 +11,22 @@ def ChartJS_(key, pcp=[], **kwargs):
     def _f(a, tprefix):
         chart_cbox = jp.Div(
             a=a, classes=tstr(bg/green/100, ppos.relative, *pcp))
-        _d = ChartJS(key, tprefix, a= chart_cbox, style='background-color: white; border: 1px solid;', **kwargs)
+        _d = ChartJS(key, tprefix, a=chart_cbox,
+                     style='background-color: white; border: 1px solid;', **kwargs)
         chart_cbox.ediv = a
         chart_cbox.apk = f'{tprefix}{key}'
         chart_cbox.apkdbmap = Dict()
-        chart_cbox.cjsbc = _d
+        chart_cbox.chartjs = _d
         _d.postinit()
         return chart_cbox
     return _f
+
 
 class ChartJS(JustpyBaseComponent):
     vue_type = 'chartjs'
     # chart_types = [] #TODO
 
-    def __init__(self,key, tprefix,  **kwargs):
+    def __init__(self, key, tprefix,  **kwargs):
         self.options = Dict()
         self.style = ''
         self.classes = ''
@@ -43,7 +45,7 @@ class ChartJS(JustpyBaseComponent):
         self.apk = f'{tprefix}{key}'
         self.apkdbmap = Dict()
         for k, v in kwargs.items():
-            print ("now parsing option ", k, " ", v)
+            print("now parsing option ", k, " ", v)
             self.__setattr__(k, v)
         # self.allowed_events = [] #TODO
         for com in ['a', 'add_to']:
@@ -71,9 +73,9 @@ class ChartJS(JustpyBaseComponent):
 
     def set_cfgattr(self, attrpath, attrval):
         dset(self.options, attrpath, attrval)
-        print ("plt cfg = ", self.options.type)
+        print("plt cfg = ", self.options.type)
         self.update_create = True
-        
+
     def add_dataset(self, dataset_plot_cfg):
         self.options.data.datasets.append(Dict(demjson.decode(
             dataset_plot_cfg.encode("ascii", "ignore"))))
@@ -84,8 +86,6 @@ class ChartJS(JustpyBaseComponent):
     #     await websocket.send_json({'type': 'chart_update', 'data': update_dict, 'id': self.id})
     #     # So the page itself does not update, only the tooltip, return True not None
     #     return True
-
-    
 
     def new_chart(self,  new_options):
         self.load_json(new_options)
@@ -114,6 +114,7 @@ class ChartJS(JustpyBaseComponent):
 
     def postinit(self):
         pass
+
     def convert_object_to_dict(self):
 
         d = {}
@@ -130,7 +131,7 @@ class ChartJS(JustpyBaseComponent):
         d['clear'] = self.clear
         d['options'] = self.options
         d['update_create'] = self.update_create
-        print ("convert called ", self.options)
+        print("convert called ", self.options)
         self.update_create = False
 
         # print("obj-dict id = ", self.id, "  style = ", self.style,

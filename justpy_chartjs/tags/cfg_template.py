@@ -3,27 +3,35 @@ from .style_values import Align, Position
 from .style_values import Axis
 from typing import NamedTuple, Any
 from aenum import Enum, auto
-from common.plot_utils import pick_colors_from_anchors
+from versa_engine.common.plot_utils import pick_colors_from_anchors
 #Chart.defaults.datasets.line.showLine = false;
 
 
-colorSchemes = { "default" : ["#7f3b08", "#f7f7f7", "#2d004b"  ]
-    }
+colorSchemes = {"default": ["#7f3b08", "#f7f7f7", "#2d004b"]
+                }
 
-colorset = default_colorset = pick_colors_from_anchors(colorSchemes["default"], 25)
+colorset = default_colorset = pick_colors_from_anchors(
+    colorSchemes["default"], 25)
+
 
 class TextColor(Enum):
     pass
 
+
 class BackgroundColor(Enum):
     pass
 
+
 class BorderColor(Enum):
     pass
+
+
 textcolor = "#000000"
 backgroundcolor = "#fee0b6"
 
-print (default_colorset)
+#print (default_colorset)
+
+
 class PointStyle(Enum):
     circle = "circle"
     cross = "cross"
@@ -35,6 +43,7 @@ class PointStyle(Enum):
     star = "star"
     triangle = "triangle"
 
+
 class ScaleType(Enum):
     Linear = "linear"
     Logarithmic = "logarithmic"
@@ -42,8 +51,10 @@ class ScaleType(Enum):
     Time = "time"
     Timeseries = "timeseries"
 
-#config parameter types
-class CPT(Enum): 
+# config parameter types
+
+
+class CPT(Enum):
     simple = "simple"
     simplemore = "simplemore"
     nitpick = "nitpick"
@@ -55,16 +66,20 @@ class CPT(Enum):
     TBD = "tbd"
     ninja = "ninja"
 
+
 class CfgattrMeta(NamedTuple):
-    default : Any
-    vtype : Any
-    vrange : Any 
+    default: Any
+    vtype: Any
+    vrange: Any
     decor_type: Any
-    
+
+
 class Color(Enum):
-    pass 
+    pass
+
+
 class PlotType(Enum):
-    Line  = "line"
+    Line = "line"
     Bar = "bar"
     Scatter = "scatter"
     Bubble = "bubble"
@@ -99,17 +114,16 @@ def datagen(labels, datavals):
         dataitem.data = dataval
         dataitem.borderColor = colorset[idx]
         dataitem.backgroundColor = colorset[idx]
-        #dataitem.stack = None #treeshake it; defines a group
-        #dataitem.borderWidth = 2 #decor parameter
-        #dataitem.borderRadius = 5 #decor parameter
-        #dataitem.borderDash = [3, 3] #decor param
-        #dataitem.yAxisID = 'y' #config param
-        #dataitem.fill = False #decor param
+        # dataitem.stack = None #treeshake it; defines a group
+        # dataitem.borderWidth = 2 #decor parameter
+        # dataitem.borderRadius = 5 #decor parameter
+        # dataitem.borderDash = [3, 3] #decor param
+        # dataitem.yAxisID = 'y' #config param
+        # dataitem.fill = False #decor param
         # if pltctx.plttype in ['line']:
         #     dataitem.cubicInterpolationModel = 'cubic' #decor param
         #     dataitem.tension = 0.5
         yield dataitem
-
 
 
 def build_pltcfg(cfgctx):
@@ -119,7 +133,8 @@ def build_pltcfg(cfgctx):
 
     cfg.options = Dict()
     cfg.options.responsive = CfgattrMeta(True, bool, bool, CPT.config)
-    cfg.options.maintainAspectRatio = CfgattrMeta(False, bool, bool, CPT.advanced)
+    cfg.options.maintainAspectRatio = CfgattrMeta(
+        False, bool, bool, CPT.advanced)
     cfg.options.aspectRatio = CfgattrMeta(2, int, [1, 4], CPT.simplemore)
     cfg.options.resizeDelay = CfgattrMeta(4, int, [0, 10], CPT.advanced)
 
@@ -127,10 +142,13 @@ def build_pltcfg(cfgctx):
     cfg.options.parsing = CfgattrMeta(False, bool, bool, CPT.advanced)
     cfg.options.interaction = Dict()
 
-    cfg.options.interaction.mode = CfgattrMeta("nearest", str, ['point', 'nearest', 'index', 'bar', 'dataset', 'x', 'y'], CPT.advanced)
+    cfg.options.interaction.mode = CfgattrMeta("nearest", str, [
+                                               'point', 'nearest', 'index', 'bar', 'dataset', 'x', 'y'], CPT.advanced)
 
-    cfg.options.interaction.intersect = CfgattrMeta(True, bool, bool, CPT.advanced)
-    cfg.options.interaction.axis = CfgattrMeta('x', str, ['x', 'y', 'xy'], CPT.ninja)
+    cfg.options.interaction.intersect = CfgattrMeta(
+        True, bool, bool, CPT.advanced)
+    cfg.options.interaction.axis = CfgattrMeta(
+        'x', str, ['x', 'y', 'xy'], CPT.ninja)
 
     #TBD events : https://www.chartjs.org/docs/latest/configuration/interactions.html
     #TBD: https://www.chartjs.org/docs/latest/configuration/interactions.html#converting-events-to-data-values
@@ -229,7 +247,7 @@ def build_pltcfg(cfgctx):
         _.ticks.includeBounds = CfgattrMeta(None, None, None, CPT.TBD)
         _.ticks.labelOffset = CfgattrMeta(0, int, [0,5], CPT.nitpick)
         _.ticks.maxRotation = CfgattrMeta(50, int, [0, 100], CPT.advanced)
-        _.ticks.minRotation = CfgattrMeta(0, int, [0,100], CPT.simple)
+        _.ticks.minRotation = CfgattrMeta(0, int, [0,100], CPT.advanced)
         _.ticks.mirror = CfgattrMeta(False, bool, bool, CPT.advanced)
 
         _.grid = Dict() #TBD
@@ -283,7 +301,7 @@ def build_pltcfg(cfgctx):
         _.ticks.includeBounds = CfgattrMeta(None, None, None, CPT.TBD)
         _.ticks.labelOffset = CfgattrMeta(0, int, [0,5], CPT.nitpick)
         _.ticks.maxRotation = CfgattrMeta(50, int, [0, 100], CPT.advanced)
-        _.ticks.minRotation = CfgattrMeta(0, int, [0,100], CPT.simple)
+        _.ticks.minRotation = CfgattrMeta(0, int, [0,100], CPT.advanced)
         _.ticks.mirror = CfgattrMeta(False, bool, bool, CPT.advanced)
 
         _.grid = Dict() #TBD
