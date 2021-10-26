@@ -260,8 +260,8 @@ def build_pltcfg(cfgctx):
         _.ticks.autoSkipPadding = CfgattrMeta(3, int, int, CPT.advanced)
         _.ticks.includeBounds = CfgattrMeta(None, None, None, CPT.TBD)
         _.ticks.labelOffset = CfgattrMeta(0, int, [0, 5], CPT.nitpick)
-        _.ticks.maxRotation = CfgattrMeta(50, int, [0, 100], CPT.advanced)
-        _.ticks.minRotation = CfgattrMeta(0, int, [0, 100], CPT.advanced)
+        _.ticks.maxRotation = CfgattrMeta(50, int, [0, 5], CPT.advanced)
+        _.ticks.minRotation = CfgattrMeta(0, int, [0, 5], CPT.advanced)
         _.ticks.mirror = CfgattrMeta(False, bool, bool, CPT.advanced)
 
         _.grid = Dict()  # TBD
@@ -295,57 +295,64 @@ def build_pltcfg(cfgctx):
         _.stacked = CfgattrMeta(False, bool, bool, CPT.config)
         _.suggestedMax = CfgattrMeta(None, int, int, CPT.TBD)
         _.suggestedMin = CfgattrMeta(None, int, int, CPT.TBD)
-        _.weight = CfgattrMeta(0, int, int, CPT.TBD) #move away from chart area
-        _.ticks = Dict() #TBD
-        _.ticks.backdropColor = CfgattrMeta("", Color, BackgroundColor, CPT.nitpick) #background color for label
-        _.ticks.backdropPadding = CfgattrMeta(2, int, [0,5], CPT.advanced) #padding for label backdrop
+        # move away from chart area
+        _.weight = CfgattrMeta(0, int, int, CPT.TBD)
+        _.ticks = Dict()  # TBD
+        _.ticks.backdropColor = CfgattrMeta(
+            "", Color, BackgroundColor, CPT.nitpick)  # background color for label
+        _.ticks.backdropPadding = CfgattrMeta(
+            2, int, [0, 5], CPT.advanced)  # padding for label backdrop
         _.ticks.callback = CfgattrMeta(None, None, None, CPT.TBD)
         _.ticks.display = CfgattrMeta(True, bool, bool, CPT.simple)
         _.ticks.color = CfgattrMeta("", Color, Color, CPT.nitpick)
         _.ticks.font = CfgattrMeta(None, None, None, CPT.TBD)
-        #_.ticks.major = Dict() #TBD: major tick formatting
+        # _.ticks.major = Dict() #TBD: major tick formatting
         _.ticks.padding = CfgattrMeta(2, int, int, CPT.nitpick)
         _.ticks.showLabelBackdrop = CfgattrMeta(False, bool, bool, CPT.nitpick)
         _.ticks.textStrokeColor = CfgattrMeta("", Color, Color, CPT.TBD)
         _.ticks.textStrokeWidth = CfgattrMeta(0, int, int, CPT.TBD)
 
         _.ticks.z = CfgattrMeta(0, int, int, CPT.advanced)
-        _.ticks.align = CfgattrMeta('center', ['start', 'center', 'end'], ['start', 'center', 'end'], CPT.ocd)
-        _.ticks.crossAlign = CfgattrMeta("near", ["near", "center", "far"], ["near", "center", "far"], CPT.ocd)
+        _.ticks.align = CfgattrMeta('center', ['start', 'center', 'end'], [
+                                    'start', 'center', 'end'], CPT.ocd)
+        _.ticks.crossAlign = CfgattrMeta("near", ["near", "center", "far"], [
+                                         "near", "center", "far"], CPT.ocd)
         _.ticks.sampleSize = CfgattrMeta(None, None, None, CPT.TBD)
         _.ticks.autoSkip = CfgattrMeta(True, bool, bool, CPT.advanced)
         _.ticks.autoSkipPadding = CfgattrMeta(3, int, int, CPT.advanced)
         _.ticks.includeBounds = CfgattrMeta(None, None, None, CPT.TBD)
-        _.ticks.labelOffset = CfgattrMeta(0, int, [0,5], CPT.nitpick)
-        _.ticks.maxRotation = CfgattrMeta(50, int, [0, 100], CPT.advanced)
-        _.ticks.minRotation = CfgattrMeta(0, int, [0,100], CPT.advanced)
+        _.ticks.labelOffset = CfgattrMeta(0, int, [0, 5], CPT.nitpick)
+        _.ticks.maxRotation = CfgattrMeta(50, int, [0, 5], CPT.advanced)
+        _.ticks.minRotation = CfgattrMeta(0, int, [0, 5], CPT.advanced)
         _.ticks.mirror = CfgattrMeta(False, bool, bool, CPT.advanced)
 
-        _.grid = Dict() #TBD
+        _.grid = Dict()  # TBD
         _.grid.display = CfgattrMeta(False, bool, bool, CPT.simplemore)
         _.grid.color = CfgattrMeta("", Color, Color, CPT.simple)
         _.grid.borderColor = CfgattrMeta("", Color, Color, CPT.nitpick)
         _.grid.tickColor = CfgattrMeta("", Color, Color, CPT.nitpick)
-        _.grid.circular = CfgattrMeta(None, None, None, CPT.TBD) #from for radar chart
-        
-        #TBD: other grid parameters
-        #https://www.chartjs.org/docs/2.9.4/axes/styling.html?h=grid
-        
+        _.grid.circular = CfgattrMeta(
+            None, None, None, CPT.TBD)  # from for radar chart
+
+        # TBD: other grid parameters
+        # https://www.chartjs.org/docs/2.9.4/axes/styling.html?h=grid
+
         _.title = Dict()
         _.title.color = CfgattrMeta("", Color, Color, CPT.nitpick)
         _.title.display = CfgattrMeta(True, bool, bool, CPT.simplemore)
         _.title.text = CfgattrMeta(cfgctx["yaxis_title"], str, str, CPT.simple)
-        
+
     return cfg
 #[set_scale_attr(v) for k, v in cfg.options.scales.items()]
+
 
 def cfgattreval(key, cam, colorbank):
     '''
     cam: CfgattrMeta
     '''
     if not isinstance(cam, CfgattrMeta):
-        print (key, cam)
-        
+        print(key, cam)
+
     if cam.decor_type == CPT.TBD or cam.decor_type == None:
         return None
     if cam.default == "":
@@ -357,14 +364,13 @@ def cfgattreval(key, cam, colorbank):
                 return textcolor
             if cam.vtype == BorderColor:
                 return backgroundcolor
-            return  next(colorbank)
+            return next(colorbank)
 
-        return None#these are required
+        return None  # these are required
     if isinstance(cam.default, Enum):
         return cam.default.value
     return cam.default
-    
-        
+
 
 def walker(adict, ppath=""):
     for key, value in adict.items():
@@ -373,16 +379,16 @@ def walker(adict, ppath=""):
             #print (value)
             yield from walker(value, ppath + f"/{key}")
         else:
-            yield (f"{ppath}/{key}", value)                   #cfgattreval(f"{ppath}/{key}", value)
+            # cfgattreval(f"{ppath}/{key}", value)
+            yield (f"{ppath}/{key}", value)
             pass
 
-            
 
-
-#def build_cfg(cfgctx, dataiter, plot_type, plot_title, xtitle, ytitle):
+# def build_cfg(cfgctx, dataiter, plot_type, plot_title, xtitle, ytitle):
 
 def build_cfg(cfg, labels, datavals):
     newcfg = Dict()
+
     def xwalker(adict, newd, colorbank):
         for key, value in adict.items():
             #print ("key = ", key)
@@ -400,6 +406,3 @@ def build_cfg(cfg, labels, datavals):
     xwalker(cfg, newcfg, iter(colorset))
     newcfg.data.datasets = [_ for _ in datagen(labels, datavals)]
     return newcfg
-    
-
- 
