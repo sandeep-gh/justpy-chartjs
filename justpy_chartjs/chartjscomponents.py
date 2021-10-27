@@ -133,8 +133,5 @@ class ChartJS(JustpyBaseComponent):
         d['update_create'] = self.update_create
 
         self.update_create = False
-        print("convert called ", self.update_create)
 
-        # print("obj-dict id = ", self.id, "  style = ", self.style,
-        #      "width = ", self.width, "height = ", self.height, "classes=", self.classes)
         return d
