@@ -136,9 +136,9 @@ def build_pltcfg(cfgctx):
     cfg.options.maintainAspectRatio = CfgattrMeta(
         False, bool, bool, CPT.advanced)
     cfg.options.aspectRatio = CfgattrMeta(2, int, [1, 4], CPT.advanced)
-    cfg.options.resizeDelay = CfgattrMeta(4, int, [0, 10], CPT.advanced)
+    cfg.options.resizeDelay = CfgattrMeta(4, int, [1, 9], CPT.advanced)
 
-    cfg.options.devicePixelRatio = CfgattrMeta(1, int, [0, 10], CPT.advanced)
+    cfg.options.devicePixelRatio = CfgattrMeta(1, int, [1, 9], CPT.advanced)
     cfg.options.parsing = CfgattrMeta(False, bool, bool, CPT.advanced)
     cfg.options.interaction = Dict()
 
@@ -162,7 +162,7 @@ def build_pltcfg(cfgctx):
 
     cfg.options.plugins.title = Dict()
     cfg.options.plugins.title.display = CfgattrMeta(
-        True, bool, bool, CPT.simplemore)
+        True, bool, bool, CPT.simple)
     cfg.options.plugins.title.text = CfgattrMeta(
         cfgctx["plot_title"], str, str, CPT.simple)
     cfg.options.elements = Dict()
@@ -171,7 +171,7 @@ def build_pltcfg(cfgctx):
     if cfgctx.plttype in [PlotType.Line, PlotType.Bubble]:
         _ = cfg.options.elements.point = Dict()
         _ = cfg.options.elements.point
-        _.radius = CfgattrMeta(3, int, [0, 5], CPT.nitpick)
+        _.radius = CfgattrMeta(3, int, [0, 6], CPT.nitpick)
         _.pointStyle = CfgattrMeta(
             PointStyle.circle, PointStyle, PointStyle, CPT.nitpick)
         _.backgroundColor = CfgattrMeta(
@@ -265,10 +265,10 @@ def build_pltcfg(cfgctx):
         _.ticks.mirror = CfgattrMeta(False, bool, bool, CPT.advanced)
 
         _.grid = Dict()  # TBD
-        _.grid.display = CfgattrMeta(False, bool, bool, CPT.simplemore)
+        _.grid.display = CfgattrMeta(False, bool, bool, CPT.simple)
         _.grid.color = CfgattrMeta("", Color, Color, CPT.simple)
         _.grid.borderColor = CfgattrMeta("", Color, Color, CPT.nitpick)
-        _.grid.tickColor = CfgattrMeta("", Color, Color, CPT.nitpick)
+        _.grid.tickColor = CfgattrMeta("", Color, Color, CPT.simplemore)
         _.grid.circular = CfgattrMeta(
             None, None, None, CPT.TBD)  # from for radar chart
 
@@ -327,7 +327,7 @@ def build_pltcfg(cfgctx):
         _.ticks.mirror = CfgattrMeta(False, bool, bool, CPT.advanced)
 
         _.grid = Dict()  # TBD
-        _.grid.display = CfgattrMeta(False, bool, bool, CPT.simplemore)
+        _.grid.display = CfgattrMeta(False, bool, bool, CPT.simple)
         _.grid.color = CfgattrMeta("", Color, Color, CPT.simple)
         _.grid.borderColor = CfgattrMeta("", Color, Color, CPT.nitpick)
         _.grid.tickColor = CfgattrMeta("", Color, Color, CPT.nitpick)
@@ -374,12 +374,9 @@ def cfgattreval(key, cam, colorbank):
 
 def walker(adict, ppath=""):
     for key, value in adict.items():
-        #print ("key = ", key)
         if isinstance(value, Dict):
-            #print (value)
             yield from walker(value, ppath + f"/{key}")
         else:
-            # cfgattreval(f"{ppath}/{key}", value)
             yield (f"{ppath}/{key}", value)
             pass
 
