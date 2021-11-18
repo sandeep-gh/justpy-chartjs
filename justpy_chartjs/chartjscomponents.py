@@ -89,7 +89,7 @@ class ChartJS(JustpyBaseComponent):
 
     def new_chart(self,  new_options):
         self.update_create = True
-        self.load_json(new_options)
+        self.options = new_options
 
     def add_to_page(self, wp: WebPage):
         wp.add_component(self)
@@ -102,8 +102,10 @@ class ChartJS(JustpyBaseComponent):
         pass
 
     def load_json(self, options_string):
+        print("load json pre= ", self.options)
         self.options = Dict(demjson.decode(
             options_string.encode("ascii", "ignore")))
+        print("load json = ", self.options)
         return self.options
 
     def load_json_from_file(self, file_name):
@@ -125,6 +127,7 @@ class ChartJS(JustpyBaseComponent):
         d['style'] = self.style
         d['event_propagation'] = self.event_propagation
         d['def'] = self.options
+        print("new chart options = ", d['def'])
         d['events'] = self.events
         d['width'] = self.width
         d['height'] = self.height
