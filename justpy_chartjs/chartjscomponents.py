@@ -5,6 +5,16 @@ from justpy import JustpyBaseComponent
 from justpy import WebPage
 from tailwind_tags import *
 from dpath.util import get as dget, set as dset
+import json
+import traceback
+# def trackfunccall(func):
+#     @functools.wraps(func)
+#     def wrapper(*args, **kwargs):
+#          = func(*args, **kwargs)
+
+#         return hcgen
+
+#     return hcgenwrapper
 
 
 def ChartJS_(key, pcp=[], **kwargs):
@@ -45,7 +55,6 @@ class ChartJS(JustpyBaseComponent):
         self.apk = f'{tprefix}{key}'
         self.apkdbmap = Dict()
         for k, v in kwargs.items():
-            print("now parsing option ", k, " ", v)
             self.__setattr__(k, v)
         # self.allowed_events = [] #TODO
         for com in ['a', 'add_to']:
@@ -65,21 +74,17 @@ class ChartJS(JustpyBaseComponent):
             self.__dict__[key] = value
 
     def set_title(self, title_text):
-        print("opt = ", self.options)
         self.options.options.title.display = True
         self.options.options.title.text = title_text
-        print("opt = ", self.options)
         pass
 
     def set_cfgattr(self, attrpath, attrval):
         dset(self.options, attrpath, attrval)
-        print("plt cfg = ", self.options.type)
         self.update_create = True
 
     def add_dataset(self, dataset_plot_cfg):
         self.options.data.datasets.append(Dict(demjson.decode(
             dataset_plot_cfg.encode("ascii", "ignore"))))
-        print("post add dataset =", self.options)
 
     # async def chart_update(self, update_dict, websocket):
     #     # https://api.highcharts.com/class-reference/Highcharts.Chart#update
@@ -102,10 +107,9 @@ class ChartJS(JustpyBaseComponent):
         pass
 
     def load_json(self, options_string):
-        print("load json pre= ", self.options)
         self.options = Dict(demjson.decode(
             options_string.encode("ascii", "ignore")))
-        print("load json = ", self.options)
+
         return self.options
 
     def load_json_from_file(self, file_name):
@@ -127,7 +131,7 @@ class ChartJS(JustpyBaseComponent):
         d['style'] = self.style
         d['event_propagation'] = self.event_propagation
         d['def'] = self.options
-        print("new chart options = ", d['def'])
+        print("new chart options = ", json.dumps(d['def'], default=str))
         d['events'] = self.events
         d['width'] = self.width
         d['height'] = self.height
