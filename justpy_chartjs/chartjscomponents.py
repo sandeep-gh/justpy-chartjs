@@ -7,6 +7,8 @@ from tailwind_tags import *
 from dpath.util import get as dget, set as dset
 import json
 import traceback
+from webapp_framework.htmlcomponents import preinit, postinit
+import webapp_framework as wf
 # def trackfunccall(func):
 #     @functools.wraps(func)
 #     def wrapper(*args, **kwargs):
@@ -19,6 +21,13 @@ import traceback
 
 def ChartJS_(key, pcp=[], **kwargs):
     def _f(a, tprefix):
+        try:
+            val = _f.key
+        except:
+            preinit(_f, key)
+            _f.hctype = "ChartJS"
+            return
+
         chart_cbox = jp.Div(
             a=a, classes=tstr(bg/green/100, ppos.relative, *pcp))
         _d = ChartJS(key, tprefix, a=chart_cbox,
@@ -28,7 +37,10 @@ def ChartJS_(key, pcp=[], **kwargs):
         chart_cbox.apkdbmap = Dict()
         chart_cbox.chartjs = _d
         _d.postinit()
+        postinit(_f, chart_cbox, a, tprefix)
+
         return chart_cbox
+    _f(None, None)
     return _f
 
 
@@ -131,7 +143,6 @@ class ChartJS(JustpyBaseComponent):
         d['style'] = self.style
         d['event_propagation'] = self.event_propagation
         d['def'] = self.options
-        print("new chart options = ", json.dumps(d['def'], default=str))
         d['events'] = self.events
         d['width'] = self.width
         d['height'] = self.height
