@@ -9,6 +9,7 @@ import json
 import traceback
 from webapp_framework.htmlcomponents import preinit, postinit
 import webapp_framework as wf
+from webapp_framework.stytracker import register as styTrackerRegister
 # def trackfunccall(func):
 #     @functools.wraps(func)
 #     def wrapper(*args, **kwargs):
@@ -19,8 +20,9 @@ import webapp_framework as wf
 #     return hcgenwrapper
 
 
+@styTrackerRegister
 def ChartJS_(key, pcp=[], **kwargs):
-    def _f(a, tprefix):
+    def _f(a):
         try:
             val = _f.key
         except:
@@ -30,17 +32,16 @@ def ChartJS_(key, pcp=[], **kwargs):
 
         chart_cbox = jp.Div(
             a=a, classes=tstr(bg/green/100, ppos.relative, *pcp))
-        _d = ChartJS(key, tprefix, a=chart_cbox,
+        _d = ChartJS(key,  a=chart_cbox,
                      style='background-color: white; border: 1px solid;', **kwargs)
         chart_cbox.ediv = a
-        chart_cbox.apk = f'{tprefix}{key}'
-        chart_cbox.apkdbmap = Dict()
+
         chart_cbox.chartjs = _d
         _d.postinit()
-        postinit(_f, chart_cbox, a, tprefix)
+        postinit(_f, chart_cbox, a)
 
         return chart_cbox
-    _f(None, None)
+    _f(None)
     return _f
 
 
@@ -48,7 +49,7 @@ class ChartJS(JustpyBaseComponent):
     vue_type = 'chartjs'
     # chart_types = [] #TODO
 
-    def __init__(self, key, tprefix,  **kwargs):
+    def __init__(self, key,   **kwargs):
         self.options = Dict()
         self.style = ''
         self.classes = ''
@@ -62,10 +63,8 @@ class ChartJS(JustpyBaseComponent):
         self.key = key
         self.id = key
 
-        self.tprefix = tprefix
         super().__init__(**kwargs)
-        self.apk = f'{tprefix}{key}'
-        self.apkdbmap = Dict()
+
         for k, v in kwargs.items():
             self.__setattr__(k, v)
         # self.allowed_events = [] #TODO
